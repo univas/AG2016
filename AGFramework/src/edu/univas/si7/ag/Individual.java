@@ -17,6 +17,10 @@ public abstract class Individual implements Comparable<Individual> {
 		this.value = value;
 	}
 
+	public int getCrhomossomeQuantity() {
+		return chromossomes.size();
+	}
+	
 	@Override
 	public String toString() {
 		return "" + chromossomes + " Value: " + value;

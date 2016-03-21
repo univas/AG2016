@@ -54,9 +54,10 @@ public class AGFramework {
 				// Seleção
 				Individual individual1 = doSelection();
 				Individual individual2 = doSelection();
+				
+				// Cruzamento
+				doCrossing(individual1, individual2);
 
-				nextGeneration.add(individual1);
-				nextGeneration.add(individual2);
 			}
 			
 			population = nextGeneration;
@@ -67,6 +68,29 @@ public class AGFramework {
 			System.out.println(individual);
 		}
 
+	}
+
+	private void doCrossing(Individual individual1, Individual individual2) {
+
+		int crossPoint = (int) (Math.random() * (individual1.getCrhomossomeQuantity() - 1)) + 1;
+		
+		switch (model.getCrossType()) {
+			case Binary: break;
+				
+			case Permutation:
+				nextGeneration.add(doPermutationCrossing(individual1, individual2, crossPoint));
+				nextGeneration.add(doPermutationCrossing(individual2, individual1, crossPoint));
+				
+				break;
+		}
+	}
+
+	private Individual doPermutationCrossing(Individual first, Individual second, int crossPoint) {
+
+		// Executar o Cruzamento por Permutação
+		
+		
+		return null;
 	}
 
 	public Individual doSelection() {
