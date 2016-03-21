@@ -7,7 +7,7 @@ public class SalesmanApp {
 	public static void main(String[] args) {
 		
 		SalesmanModel model = new SalesmanModel();
-		model.setPopulationSize(7);
+		model.setPopulationSize(25);
 		
 		AGFramework framework = new AGFramework(model);
 		

@@ -28,10 +28,17 @@ public class AGFramework {
 			population.add(individual);
 		}
 		
-		// Início do futuro for de gerações
+		for(int generation = 0; generation < model.getGenerationQuantity(); generation++) {
 		
+			System.out.println();
+			System.out.println("Geração: " + (generation + 1));
+			
 			// Classificação
 			Collections.sort(population);
+			
+			for (Individual individual : population) {
+				System.out.println(individual);
+			}
 			
 			// Elitísmo
 			nextGeneration = new ArrayList<>();
@@ -43,14 +50,17 @@ public class AGFramework {
 				nextGeneration.add(population.get(0));
 			}
 			
-			// Seleção
-			Individual individual1 = doSelection();
-			Individual individual2 = doSelection();
+			while(nextGeneration.size() < model.getPopulationSize()) {
+				// Seleção
+				Individual individual1 = doSelection();
+				Individual individual2 = doSelection();
 
-			System.out.println("I1: " + individual1);
-			System.out.println("I2: " + individual2);
+				nextGeneration.add(individual1);
+				nextGeneration.add(individual2);
+			}
 			
-		// Fim do futuro for de gerações
+			population = nextGeneration;
+		}
 			
 		System.out.println();
 		for (Individual individual : population) {
