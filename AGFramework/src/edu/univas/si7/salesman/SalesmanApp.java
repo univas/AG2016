@@ -8,6 +8,7 @@ public class SalesmanApp {
 		
 		SalesmanModel model = new SalesmanModel();
 		model.setPopulationSize(25);
+		model.setGenerationQuantity(100);
 		
 		AGFramework framework = new AGFramework(model);
 		

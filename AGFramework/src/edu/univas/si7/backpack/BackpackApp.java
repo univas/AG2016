@@ -8,6 +8,7 @@ public class BackpackApp {
 		
 		BackpackModel model = new BackpackModel();
 		model.setPopulationSize(25);
+		model.setGenerationQuantity(100);
 		
 		AGFramework framework = new AGFramework(model);
 		framework.execute();

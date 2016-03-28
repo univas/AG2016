@@ -30,15 +30,9 @@ public class AGFramework {
 		
 		for(int generation = 0; generation < model.getGenerationQuantity(); generation++) {
 		
-			System.out.println();
-			System.out.println("Geração: " + (generation + 1));
-			
 			// Classificação
 			Collections.sort(population);
-			
-			for (Individual individual : population) {
-				System.out.println(individual);
-			}
+			System.out.println("Geração: " + (generation + 1) + " // " + population.get(0));
 			
 			// Elitísmo
 			nextGeneration = new ArrayList<>();
@@ -64,9 +58,10 @@ public class AGFramework {
 		}
 			
 		System.out.println();
-		for (Individual individual : population) {
-			System.out.println(individual);
-		}
+		System.out.println(population.get(0));
+//		for (Individual individual : population) {
+//			System.out.println(individual);
+//		}
 
 	}
 
@@ -87,10 +82,23 @@ public class AGFramework {
 
 	private Individual doPermutationCrossing(Individual first, Individual second, int crossPoint) {
 
-		// Executar o Cruzamento por Permutação
+		ArrayList<Chromossome> chromossomes = new ArrayList<Chromossome>();
 		
+		for(int i = 0; i < crossPoint; i++) {
+			chromossomes.add(first.get(i));
+		}
 		
-		return null;
+		for(int i = 0; i < first.size(); i++) {
+			if(!chromossomes.contains(second.get(i))) {
+				chromossomes.add(second.get(i));
+			}
+		}
+		
+		Individual individual = model.createIndividual();
+		individual.addAll(chromossomes);
+		individual.calculateValue();
+		
+		return individual;
 	}
 
 	public Individual doSelection() {
