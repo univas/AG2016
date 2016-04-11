@@ -47,4 +47,8 @@ public abstract class Individual implements Comparable<Individual> {
 	public String toString() {
 		return "" + chromossomes + " Value: " + value;
 	}
+
+	public Chromossome set(int index, Chromossome element) {
+		return chromossomes.set(index, element);
+	}
 }

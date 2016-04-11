@@ -44,6 +44,23 @@ public class AGFramework {
 				nextGeneration.add(population.get(0));
 			}
 			
+			// Individuos Estrangeiros
+			int foreignQuantity = 
+					Math.round(model.getPopulationSize() 
+							* model.getForeignRate() / 100f);
+			
+			if(foreignQuantity % 2 != 0) {
+				foreignQuantity++;
+			}
+			
+			for(int i = 0; i < foreignQuantity; i++) {
+				Individual individual = model.createIndividual();
+				individual.calculateValue();
+				
+				nextGeneration.add(individual);
+			}
+			
+			// Cruzamento e Mutação
 			while(nextGeneration.size() < model.getPopulationSize()) {
 				// Seleção
 				Individual individual1 = doSelection();
@@ -52,6 +69,8 @@ public class AGFramework {
 				// Cruzamento
 				doCrossing(individual1, individual2);
 
+				doMutation();
+				
 			}
 			
 			population = nextGeneration;
@@ -63,6 +82,43 @@ public class AGFramework {
 //			System.out.println(individual);
 //		}
 
+	}
+	
+	private void doMutation() {
+
+		Individual individual1 = nextGeneration.get(nextGeneration.size() - 1);
+		Individual individual2 = nextGeneration.get(nextGeneration.size() - 2);
+		
+		switch (model.getMutationType()) {
+			case Binary: break;
+				
+			case Permutation:
+				doPermutationMutation(individual1);
+				doPermutationMutation(individual2);
+				
+				
+				break;
+		}
+	}
+
+
+	private void doPermutationMutation(Individual individual) {
+
+		float rate = model.getMutationRate() / 100f;
+		
+		if(Math.random() < rate) {
+			int indexC1 = (int) (individual.getCrhomossomeQuantity() * Math.random());
+			int indexC2 = (int) (individual.getCrhomossomeQuantity() * Math.random());
+			
+			Chromossome c1 = individual.get(indexC1);
+			Chromossome c2 = individual.get(indexC2);
+			
+			individual.set(indexC1, c2);
+			individual.set(indexC2, c1);
+			
+			individual.calculateValue();
+		}
+		
 	}
 
 	private void doCrossing(Individual individual1, Individual individual2) {
