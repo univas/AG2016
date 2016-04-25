@@ -90,12 +90,15 @@ public class AGFramework {
 		Individual individual2 = nextGeneration.get(nextGeneration.size() - 2);
 		
 		switch (model.getMutationType()) {
-			case Binary: break;
-				
+			case Binary: 
+				doBinaryMutation(individual1);
+				doBinaryMutation(individual2);
+	
+				break;
+			
 			case Permutation:
 				doPermutationMutation(individual1);
 				doPermutationMutation(individual2);
-				
 				
 				break;
 		}
@@ -121,13 +124,32 @@ public class AGFramework {
 		
 	}
 
+	private void doBinaryMutation(Individual individual) {
+
+		float rate = model.getMutationRate() / 100f;
+		
+		if(Math.random() < rate) {
+			int indexC1 = (int) (individual.getCrhomossomeQuantity() * Math.random());
+			
+			Chromossome c1 = individual.get(indexC1);
+			c1.doMutation();
+			
+			individual.calculateValue();
+		}
+		
+	}
+
 	private void doCrossing(Individual individual1, Individual individual2) {
 
 		int crossPoint = (int) (Math.random() * (individual1.getCrhomossomeQuantity() - 1)) + 1;
 		
 		switch (model.getCrossType()) {
-			case Binary: break;
+			case Binary: 
+				nextGeneration.add(doBinaryCrossing(individual1, individual2, crossPoint));
+				nextGeneration.add(doBinaryCrossing(individual2, individual1, crossPoint));
 				
+				break;
+			
 			case Permutation:
 				nextGeneration.add(doPermutationCrossing(individual1, individual2, crossPoint));
 				nextGeneration.add(doPermutationCrossing(individual2, individual1, crossPoint));
@@ -148,6 +170,25 @@ public class AGFramework {
 			if(!chromossomes.contains(second.get(i))) {
 				chromossomes.add(second.get(i));
 			}
+		}
+		
+		Individual individual = model.createIndividual();
+		individual.addAll(chromossomes);
+		individual.calculateValue();
+		
+		return individual;
+	}
+
+	private Individual doBinaryCrossing(Individual first, Individual second, int crossPoint) {
+
+		ArrayList<Chromossome> chromossomes = new ArrayList<Chromossome>();
+		
+		for(int i = 0; i < crossPoint; i++) {
+			chromossomes.add(first.get(i));
+		}
+		
+		for(int i = crossPoint; i < first.size(); i++) {
+			chromossomes.add(second.get(i));
 		}
 		
 		Individual individual = model.createIndividual();

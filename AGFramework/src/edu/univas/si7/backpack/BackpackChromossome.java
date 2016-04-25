@@ -69,4 +69,10 @@ public class BackpackChromossome extends Chromossome {
 		return true;
 	}
 
+	@Override
+	public void doMutation() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

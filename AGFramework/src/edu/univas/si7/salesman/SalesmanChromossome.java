@@ -69,4 +69,10 @@ public class SalesmanChromossome extends Chromossome {
 		return true;
 	}
 
+	@Override
+	public void doMutation() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
